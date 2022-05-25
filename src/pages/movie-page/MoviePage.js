@@ -90,11 +90,13 @@ const MoviePage = () => {
               </p>
             </div>
             <hr />
-            <div className="rating d-flex-center-wrap">
+            <div className="rating d-flex justify-content-center">
               <Rating rate={singleMovie?.vote_average} />
             </div>
             <hr />
-            <div className={`d-flex-center-wrap`}>{movieCategories}</div>
+            <div className={`d-flex justify-content-center`}>
+              {movieCategories}
+            </div>
             <hr />
             <a target={"_blank"} rel="noreferrer" href={singleMovie?.homepage}>
               <Button variant={"success"} className="w-100">
