@@ -1,34 +1,33 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { APIKEY, baseURL } from "../shared/url";
 import axios from "axios";
+import { baseURL, API_KEY } from "../shared/url";
 
 export const fetchAllMovies = createAsyncThunk(
-  "allMovies/fetchAllMovies",
+  "movies/fetchAllMovies",
   async (pageNum, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=24fbc4a844ea11002493c5933db3e0aa&language=en-US&page=${pageNum}`
+        `${baseURL}/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}`
       );
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const fetchSingleMovie = createAsyncThunk(
-  "allMovies/fetchSingleMovie",
+  "movies/fetchSingleMovie",
   async (movieId, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${APIKEY}`
+        `${baseURL}/${movieId}?api_key=${API_KEY}`
       );
       return data;
     } catch (error) {
-      console.log(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -42,7 +41,7 @@ const initialState = {
 };
 
 const allMoviesSlice = createSlice({
-  name: "allMovies",
+  name: "movies",
   initialState,
   extraReducers: {
     // ALL MOVIES

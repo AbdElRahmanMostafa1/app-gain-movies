@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
 import styles from "./moviePage.module.css";
-import LoadingSpinner from "../components/UI/loading-spinner/LoadingSpinner";
+
+import {
+  Alert,
+  LoadingSpinner,
+  MovieCategory,
+  Rating,
+} from "../../components/UI";
+import { Col, Container, Button, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { baseImageURL, baseURL } from "../shared/url";
-import { fetchSingleMovie } from "../store/allMoviesSlice";
-import Rating from "../components/UI/rating/Rating";
-import MovieCategory from "../components/UI/movie-category/MovieCategory";
-import { Col, Container, Button, Row } from "react-bootstrap";
+import { baseImageURL } from "../../shared/url";
+import { fetchSingleMovie } from "../../store/moviesSlice";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -15,14 +19,18 @@ const MoviePage = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const { isLoading, singleMovie, error } = useSelector(
-    (state) => state.allMovies
+    (state) => state.movies
   );
 
   useEffect(() => {
     dispatch(fetchSingleMovie(params.id));
   }, [dispatch, params.id]);
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) {
+    return <LoadingSpinner />;
+  } else if (error) {
+    return <Alert msg={error} />;
+  }
 
   const movieCategories = singleMovie?.genres.map((cat) => (
     <MovieCategory key={cat.id}> {cat.name} </MovieCategory>

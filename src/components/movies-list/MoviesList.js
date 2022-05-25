@@ -1,15 +1,11 @@
 import React, { useEffect } from "react";
-import MovieItem from "../UI/movie-item/MovieItem";
-import LoadingSpinner from "../UI/loading-spinner/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllMovies } from "../../store/allMoviesSlice";
-import { Col, Container, Row } from "react-bootstrap";
+import { fetchAllMovies } from "../../store/moviesSlice";
+import { MovieItem, LoadingSpinner, Alert } from "../UI";
 
 const MoviesList = ({ active }) => {
   const dispatch = useDispatch();
-  const { allMovies, isLoading, error } = useSelector(
-    (state) => state.allMovies
-  );
+  const { allMovies, isLoading, error } = useSelector((state) => state.movies);
 
   useEffect(() => {
     dispatch(fetchAllMovies(active));
@@ -17,6 +13,8 @@ const MoviesList = ({ active }) => {
 
   if (isLoading) {
     return <LoadingSpinner />;
+  } else if (error) {
+    return <Alert msg={error} />;
   }
 
   const MoviesList = allMovies?.results?.map((movie) => (

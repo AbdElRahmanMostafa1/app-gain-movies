@@ -1,7 +1,6 @@
 import "./App.css";
 import Header from "./components/UI/header/Header";
-import LandingPage from "./pages/LandingPage";
-import MoviePage from "./pages/MoviePage";
+import { LandingPage, MoviePage, NotFoundPage } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -12,8 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="movie/:id" element={<MoviePage />} />
-          {/* FIXME */}
-          <Route path="*" element={<LandingPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
     </BrowserRouter>
