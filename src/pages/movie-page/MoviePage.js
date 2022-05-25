@@ -94,7 +94,7 @@ const MoviePage = () => {
               <Rating rate={singleMovie?.vote_average} />
             </div>
             <hr />
-            <div className={`d-flex justify-content-center`}>
+            <div className={`d-flex flex-wrap justify-content-center`}>
               {movieCategories}
             </div>
             <hr />
